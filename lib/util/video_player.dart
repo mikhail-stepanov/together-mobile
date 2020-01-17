@@ -21,7 +21,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // offers several different constructors to play videos from assets, files,
     // or the internet.
     _controller = VideoPlayerController.network(
-      'https://raw.githubusercontent.com/mikhail-stepanov/together/master/assets/videos/together_ny.mp4',
+      'https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/videos/together_ny.mp4',
     );
 
     // Initialize the controller and store the Future for later use.

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/login/signup_popup.dart';
 import 'package:together_mobile/util/size_config.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class SignupScreenState extends State {
 
   final color_text = Color(0xFF707070);
   bool _agreement = false;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController(text: '+7');
+  final TextEditingController _emailController = TextEditingController();
 
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -41,6 +46,7 @@ class SignupScreenState extends State {
                           color: Colors.white),
                     ),
                     new TextFormField(
+                        controller: _nameController,
                         decoration: new InputDecoration(
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide: new BorderSide(
@@ -66,6 +72,7 @@ class SignupScreenState extends State {
                           color: Colors.white),
                     ),
                     new TextFormField(
+                        controller: _phoneController,
                         decoration: new InputDecoration(
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide: new BorderSide(
@@ -79,7 +86,6 @@ class SignupScreenState extends State {
                         style: TextStyle(
                             fontSize: SizeConfig.height(2.3),
                             color: color_text),
-                        initialValue: '+7',
                         validator: (value) {
                           if (value.isEmpty)
                             return 'Пожалуйста введите свой телефон';
@@ -92,6 +98,7 @@ class SignupScreenState extends State {
                           color: Colors.white),
                     ),
                     new TextFormField(
+                        controller: _emailController,
                         decoration: new InputDecoration(
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide: new BorderSide(
@@ -142,8 +149,22 @@ class SignupScreenState extends State {
                       minWidth: SizeConfig.width(90.0),
                       height: SizeConfig.height(7.0),
                       child: RaisedButton(
-                        onPressed: () {
-                          if (_agreement)
+                        onPressed: () async {
+                          if (_agreement) {
+                            String name = _nameController.text;
+                            String phone = _phoneController.text;
+                            String email = _emailController.text;
+                            var response = await http.post(
+                                'http://10.0.2.2:8080/v1/signup',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json'
+                                },
+                                body: jsonEncode({
+                                  'name': name,
+                                  'phone': phone,
+                                  'email': email
+                                }));
                             Navigator.push(
                                 context,
                                 PageRouteBuilder(
@@ -151,6 +172,7 @@ class SignupScreenState extends State {
                                     pageBuilder:
                                         (BuildContext context, _, __) =>
                                             SignupPopup()));
+                          }
                         },
                         child: Text(
                           'Отправить',
@@ -169,50 +191,34 @@ class SignupScreenState extends State {
                       child: Text(
                         'или',
                         style: TextStyle(
-                            fontSize: SizeConfig.height(2.3),
+                            fontSize: SizeConfig.height(2),
                             color: Color(0xFF707070)),
                       ),
                     ),
                     new SizedBox(height: SizeConfig.height(3.0)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new ButtonTheme(
-                          minWidth: SizeConfig.width(30.0),
-                          height: SizeConfig.height(7.0),
-                          child: RaisedButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Facebook',
-                              style: TextStyle(
-                                fontSize: SizeConfig.height(2.7),
-                              ),
-                            ),
-                            color: Color(0xFF1977F3),
-                            textColor: Colors.white,
+                    new ButtonTheme(
+                      minWidth: SizeConfig.width(90.0),
+                      height: SizeConfig.height(7.0),
+                      child: RaisedButton(
+                        onPressed: () {
+                          if (_agreement)
+                            Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder:
+                                        (BuildContext context, _, __) =>
+                                            SignupPopup()));
+                        },
+                        child: Text(
+                          'Facebook',
+                          style: TextStyle(
+                            fontSize: SizeConfig.height(2.7),
                           ),
                         ),
-                        new SizedBox(width: SizeConfig.width(10.0)),
-                        Container(
-                            width: SizeConfig.width(30.0),
-                            height: SizeConfig.height(7.0),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFFD310D3), Color(0xFFFE5543)],
-                              )),
-                          child: RaisedButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Facebook',
-                              style: TextStyle(
-                                fontSize: SizeConfig.height(2.7),
-                              ),
-                            ),
-                            textColor: Colors.white,
-                          ),
-                        ),
-                      ],
+                        color: Color(0xFF1977F3),
+                        textColor: Colors.white,
+                      ),
                     ),
                     new SizedBox(height: SizeConfig.height(22)),
                   ],

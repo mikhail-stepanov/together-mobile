@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 import 'package:pin_view/pin_view.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class LoginScreenState extends State {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    String pincode;
 
     return Scaffold(
         body: new Container(
@@ -60,14 +65,49 @@ class LoginScreenState extends State {
                           // when all the fields are filled
                           // submit function runs with the pin
                           print(pin);
+                          pincode = pin;
                         }),
                     new SizedBox(height: SizeConfig.height(15.0)),
                     new ButtonTheme(
                       minWidth: SizeConfig.width(90.0),
                       height: SizeConfig.height(7.0),
                       child: RaisedButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/home');
+                        onPressed: () async {
+                          var response = await http.post(
+                              'http://10.0.2.2:8080/v1/login',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                              },
+                              body: jsonEncode({
+                                'userId': int.parse(pincode),
+                              }));
+
+                          if (response.statusCode == 200) {
+                            Map<String, dynamic> responseJson =
+                                json.decode(response.body);
+                            // If server returns an OK response, parse the JSON.
+                            if (responseJson['success'] == true) {
+                              var responseInfo = await http.post(
+                                  'http://10.0.2.2:8080/v1/info',
+                                  headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                  },
+                                  body: jsonEncode({
+                                    'userId': int.parse(pincode),
+                                  }));
+                              Map<String, dynamic> responseInfoJson =
+                              json.decode(responseInfo.body);
+                              Globals.name = responseInfoJson['name'];
+                              Globals.id = responseInfoJson['userId'];
+
+                              Navigator.pushReplacementNamed(context, '/home');
+                            }
+                          } else {
+                            // If that response was not OK, throw an error.
+                            throw Exception('Failed to load post');
+                          }
                         },
                         child: Text(
                           'Войти',

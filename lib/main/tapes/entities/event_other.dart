@@ -21,7 +21,7 @@ class EventOther extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: new NetworkImage(
-                    "https://raw.githubusercontent.com/mikhail-stepanov/together/master/assets/images/together_preview_2.png"),
+                    "https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/images/together_preview_2.png"),
                 fit: BoxFit.fill,
               ),
             ),

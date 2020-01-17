@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/main/tapes/entities/event.dart';
 
+import 'entities/event_null.dart';
+
 class FutureEventTape extends StatefulWidget {
   @override
   createState() => new FutureEventTapeState();
@@ -15,7 +17,7 @@ class FutureEventTapeState extends State<FutureEventTape> {
           alignment: Alignment.topCenter,
           child: ListView.builder(
             itemCount: 1,
-            itemBuilder: (context, index) => Event(),
+            itemBuilder: (context, index) => EventNull(),
           )),
     );
   }

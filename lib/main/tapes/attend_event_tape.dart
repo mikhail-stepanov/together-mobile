@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:together_mobile/main/tapes/entities/event.dart';
 import 'package:together_mobile/main/tapes/entities/event_null.dart';
 
-class OldEventTape extends StatefulWidget {
+class AttendEventTape extends StatefulWidget {
   @override
-  createState() => new OldEventTapeState();
+  createState() => new AttendEventTapeState();
 }
 
-class OldEventTapeState extends State<OldEventTape> {
+class AttendEventTapeState extends State<AttendEventTape> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class OldEventTapeState extends State<OldEventTape> {
           alignment: Alignment.topCenter,
           child: ListView.builder(
             itemCount: 1,
-            itemBuilder: (context, index) => Event(),
+            itemBuilder: (context, index) => EventNull(),
           )),
     );
   }

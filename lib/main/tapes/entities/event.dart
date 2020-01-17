@@ -20,7 +20,7 @@ class Event extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: new NetworkImage(
-                    "https://raw.githubusercontent.com/mikhail-stepanov/together/master/assets/images/together_preview.png"),
+                    "https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/images/together_preview.png"),
                 fit: BoxFit.fill,
               ),
             ),

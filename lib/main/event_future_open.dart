@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:together_mobile/main/attend_tabs.dart';
 import 'package:together_mobile/main/home_tabs.dart';
 import 'package:together_mobile/main/tapes/entities//event_other.dart';
+import 'package:together_mobile/main/tapes/entities/event_null.dart';
+import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 import 'package:together_mobile/util/video_player.dart';
 
@@ -109,24 +111,24 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   ),
                 ),
                 new SizedBox(height: SizeConfig.height(4.0)),
-                Container(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: ButtonTheme(
-                    minWidth: SizeConfig.width(90.0),
-                    height: SizeConfig.height(7.0),
-                    child: RaisedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Купить билет',
-                        style: TextStyle(
-                          fontSize: SizeConfig.height(3),
-                        ),
-                      ),
-                      color: Color(0xFF707070),
-                      textColor: Colors.white,
-                    ),
-                  ),
-                ),
+//                Container(
+//                  padding: EdgeInsets.only(left: 20.0),
+//                  child: ButtonTheme(
+//                    minWidth: SizeConfig.width(90.0),
+//                    height: SizeConfig.height(7.0),
+//                    child: RaisedButton(
+//                      onPressed: () {},
+//                      child: Text(
+//                        'Купить билет',
+//                        style: TextStyle(
+//                          fontSize: SizeConfig.height(3),
+//                        ),
+//                      ),
+//                      color: Color(0xFF707070),
+//                      textColor: Colors.white,
+//                    ),
+//                  ),
+//                ),
                 new SizedBox(height: SizeConfig.height(4.0)),
                 Container(
                   padding: EdgeInsets.only(left: 20.0, right: 15.0),
@@ -145,8 +147,8 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) => EventOther(),
+                    itemCount: 1,
+                    itemBuilder: (context, index) => EventNull(),
                   ),
                 ),
                 new SizedBox(height: SizeConfig.height(2.0)),
@@ -183,14 +185,14 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Михаил Степанов',
+                                Globals.name,
                                 style: TextStyle(
                                     fontSize: SizeConfig.height(2.3),
                                     color: Colors.white),
                               ),
                               SizedBox(height: SizeConfig.height(1)),
                               Text(
-                                'id 1234',
+                                'id ' + Globals.id.toString(),
                                 style: TextStyle(
                                     fontSize: SizeConfig.height(2.3),
                                     color: Colors.white),

@@ -26,7 +26,7 @@ dependencies:
   english_words: ^3.1.0
   url_launcher: ^5.4.1
   video_player: ^0.10.5
-
+  http: ^0.12.0+4
   flutter_svg: ^0.7.0
   pin_view: ^1.0.1
 
@@ -38,6 +38,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.7.4
+
+flutter_icons:
+  image_path: "C:/Users/heirl/Documents/Projects/MobileProjects/together_mobile/together_mobile/assets/images/icon.png"
+  android: true
+  ios: true
 
 
 # For information on the generic Dart part of this file, see the
