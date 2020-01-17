@@ -155,7 +155,7 @@ class SignupScreenState extends State {
                             String phone = _phoneController.text;
                             String email = _emailController.text;
                             var response = await http.post(
-                                'http://10.0.2.2:8080/v1/signup',
+                                'http://84.201.185.226:8080/v1/signup',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json'

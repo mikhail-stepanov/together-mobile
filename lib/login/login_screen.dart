@@ -74,7 +74,7 @@ class LoginScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://10.0.2.2:8080/v1/login',
+                              'http://84.201.185.226:8080/v1/login',
                               headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ class LoginScreenState extends State {
                             // If server returns an OK response, parse the JSON.
                             if (responseJson['success'] == true) {
                               var responseInfo = await http.post(
-                                  'http://10.0.2.2:8080/v1/info',
+                                  'http://84.201.185.226:8080/v1/info',
                                   headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
