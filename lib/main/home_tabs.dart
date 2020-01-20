@@ -14,10 +14,8 @@ class _HomeTabsState extends State<HomeTabs> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(fontFamily: 'Futura'),
-        debugShowCheckedModeBanner: false,
-        home: DefaultTabController(
+    return Scaffold(
+        body: DefaultTabController(
             length: 2,
             child: Scaffold(
               key: _scaffoldKey,

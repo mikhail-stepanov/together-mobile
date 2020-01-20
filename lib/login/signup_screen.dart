@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/login/signup_popup.dart';
+import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,8 +16,11 @@ class SignupScreenState extends State {
   final color_text = Color(0xFF707070);
   bool _agreement = false;
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController(text: '+7');
+  final TextEditingController _phoneController =
+      TextEditingController(text: '+7');
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _facebookController = TextEditingController();
+  final TextEditingController _instagramController = TextEditingController();
 
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -121,6 +125,58 @@ class SignupScreenState extends State {
                           if (regExp.hasMatch(value)) return null;
                           return 'Некорректный Email';
                         }),
+                    new SizedBox(height: SizeConfig.height(2.5)),
+                    new Text(
+                      'Ссылка на Facebook:',
+                      style: TextStyle(
+                          fontSize: SizeConfig.height(2.3),
+                          color: Colors.white),
+                    ),
+                    new TextFormField(
+                        controller: _facebookController,
+                        decoration: new InputDecoration(
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            )),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            ))),
+                        cursorColor: color_text,
+                        style: TextStyle(
+                            fontSize: SizeConfig.height(2.3),
+                            color: color_text),
+                        validator: (value) {
+                          if (value.isEmpty)
+                            return 'Пожалуйста введите ссылку на одну из соцсетей';
+                        }),
+                    new SizedBox(height: SizeConfig.height(2.5)),
+                    new Text(
+                      'Ссылка на Instagram:',
+                      style: TextStyle(
+                          fontSize: SizeConfig.height(2.3),
+                          color: Colors.white),
+                    ),
+                    new TextFormField(
+                        controller: _instagramController,
+                        decoration: new InputDecoration(
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            )),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            ))),
+                        cursorColor: color_text,
+                        style: TextStyle(
+                            fontSize: SizeConfig.height(2.3),
+                            color: color_text),
+                        validator: (value) {
+                          if (value.isEmpty)
+                            return 'Пожалуйста введите ссылку на одну из соцсетей';
+                        }),
                     new SizedBox(height: SizeConfig.height(1.8)),
                     new Row(children: [
                       Theme(
@@ -154,8 +210,10 @@ class SignupScreenState extends State {
                             String name = _nameController.text;
                             String phone = _phoneController.text;
                             String email = _emailController.text;
+                            String facebook = _facebookController.text;
+                            String instagram = _instagramController.text;
                             var response = await http.post(
-                                'http://84.201.185.226:8080/v1/signup',
+                                'http://' + Globals.host + ':8080/v1/signup',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json'
@@ -163,7 +221,9 @@ class SignupScreenState extends State {
                                 body: jsonEncode({
                                   'name': name,
                                   'phone': phone,
-                                  'email': email
+                                  'email': email,
+                                  'facebook': facebook,
+                                  'instagram': instagram
                                 }));
                             Navigator.push(
                                 context,
@@ -220,7 +280,7 @@ class SignupScreenState extends State {
                         textColor: Colors.white,
                       ),
                     ),
-                    new SizedBox(height: SizeConfig.height(22)),
+                    new SizedBox(height: SizeConfig.height(1)),
                   ],
                 )))));
   }

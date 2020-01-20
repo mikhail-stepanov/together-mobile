@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/main/tapes/entities/event.dart';
-import 'package:together_mobile/main/tapes/entities/event_null.dart';
 
 class OldEventTape extends StatefulWidget {
   @override

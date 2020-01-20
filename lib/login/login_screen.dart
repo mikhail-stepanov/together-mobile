@@ -19,8 +19,6 @@ class LoginScreenState extends State {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    String pincode;
-
     return Scaffold(
         body: new Container(
             padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -64,8 +62,9 @@ class LoginScreenState extends State {
                         submit: (String pin) {
                           // when all the fields are filled
                           // submit function runs with the pin
+                          Globals.pincode = pin;
                           print(pin);
-                          pincode = pin;
+
                         }),
                     new SizedBox(height: SizeConfig.height(15.0)),
                     new ButtonTheme(
@@ -74,13 +73,13 @@ class LoginScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://84.201.185.226:8080/v1/login',
+                              'http://' + Globals.host + ':8080/v1/login',
                               headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                               },
                               body: jsonEncode({
-                                'userId': int.parse(pincode),
+                                'userId': int.parse(Globals.pincode),
                               }));
 
                           if (response.statusCode == 200) {
@@ -89,13 +88,13 @@ class LoginScreenState extends State {
                             // If server returns an OK response, parse the JSON.
                             if (responseJson['success'] == true) {
                               var responseInfo = await http.post(
-                                  'http://84.201.185.226:8080/v1/info',
+                                  'http://' + Globals.host + ':8080/v1/info',
                                   headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                   },
                                   body: jsonEncode({
-                                    'userId': int.parse(pincode),
+                                    'userId': int.parse(Globals.pincode),
                                   }));
                               Map<String, dynamic> responseInfoJson =
                               json.decode(responseInfo.body);
