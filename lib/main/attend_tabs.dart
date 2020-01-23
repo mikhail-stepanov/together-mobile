@@ -23,14 +23,18 @@ class _AttendTabsState extends State<AttendTabs> {
               appBar: AppBar(
                 title: Container(
                   padding: EdgeInsets.all(30.0),
-                  child: new Image.asset('assets/images/together_word.png', fit: BoxFit.cover),
+                  child: new Image.asset('assets/images/together_word.png',
+                    height: SizeConfig.height(2.5),
+                    width: SizeConfig.width(30),),
                 ),
                 backgroundColor: Color(0xFF231F20),
                 titleSpacing: 0.0,
                 actions: <Widget>[
                   IconButton(
                     padding: EdgeInsets.only(right: 15.0),
-                    icon: Image.asset('assets/images/icon_menu.png'),
+                    icon: Image.asset('assets/images/icon_menu.png',
+                        height: SizeConfig.height(5),
+                        width: SizeConfig.width(5)),
                     onPressed: () => _scaffoldKey.currentState.openDrawer(),
                   )
                 ],
@@ -40,6 +44,7 @@ class _AttendTabsState extends State<AttendTabs> {
                   indicatorColor: Color(0xFF707070),
                   labelStyle: TextStyle(
                     fontSize: SizeConfig.height(2.7),
+                    fontFamily: 'Futura',
                   ),
                   tabs: [
                     new Container(
@@ -47,7 +52,7 @@ class _AttendTabsState extends State<AttendTabs> {
                       child: new Tab(text: 'Посещенные мероприятия'),
                     ),
                     new Container(
-                      width: SizeConfig.width(60.0),
+                      width: SizeConfig.width(40.0),
                       child: new Tab(text: 'Билеты'),
                     ),
                   ],

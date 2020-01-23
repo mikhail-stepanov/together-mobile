@@ -13,7 +13,7 @@ class EventNull extends StatelessWidget {
               'Мероприятий нет',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: SizeConfig.height(3), color: Color(0xFF707070)),
+                  fontSize: SizeConfig.height(2.8), color: Color(0xFF707070)),
             ),
           ],
         ),

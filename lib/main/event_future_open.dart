@@ -25,14 +25,17 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
           title: Container(
             padding: EdgeInsets.all(30.0),
             child: new Image.asset('assets/images/together_word.png',
-                fit: BoxFit.cover),
+              height: SizeConfig.height(2.5),
+              width: SizeConfig.width(30),),
           ),
           backgroundColor: Color(0xFF231F20),
           titleSpacing: 0.0,
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 15.0),
-              icon: Image.asset('assets/images/icon_menu.png'),
+              icon: Image.asset('assets/images/icon_menu.png',
+                  height: SizeConfig.height(5),
+                  width: SizeConfig.width(5)),
               onPressed: () => _scaffoldKey.currentState.openDrawer(),
             )
           ],
@@ -73,7 +76,9 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   padding: EdgeInsets.only(left: 15.0),
                   child: Row(
                     children: [
-                      new Image.asset('assets/images/icon_location.png'),
+                      new Image.asset('assets/images/icon_location.png',
+                          height: SizeConfig.height(4),
+                          width: SizeConfig.width(4)),
                       new SizedBox(width: SizeConfig.width(2.7)),
                       new Text(
                         'Крышка Москва-Сити',
@@ -89,7 +94,9 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   padding: EdgeInsets.only(left: 15.0),
                   child: Row(
                     children: [
-                      new Image.asset('assets/images/icon_time.png'),
+                      new Image.asset('assets/images/icon_time.png',
+                          height: SizeConfig.height(4),
+                          width: SizeConfig.width(4)),
                       new SizedBox(width: SizeConfig.width(2.7)),
                       new Text(
                         '01.01.19',

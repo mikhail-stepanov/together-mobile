@@ -23,14 +23,19 @@ class _HomeTabsState extends State<HomeTabs> {
                 title: Container(
                   padding: EdgeInsets.all(30.0),
                   child: new Image.asset('assets/images/together_word.png',
-                      fit: BoxFit.cover),
+                      height: SizeConfig.height(2.5),
+                      width: SizeConfig.width(30),
+                      ),
                 ),
                 backgroundColor: Color(0xFF231F20),
                 titleSpacing: 0.0,
                 actions: <Widget>[
                   IconButton(
                     padding: EdgeInsets.only(right: 15.0),
-                    icon: Image.asset('assets/images/icon_menu.png'),
+                    icon: Image.asset('assets/images/icon_menu.png',
+                      height: SizeConfig.height(5),
+                      width: SizeConfig.width(5),
+                    ),
                     onPressed: () => _scaffoldKey.currentState.openDrawer(),
                   )
                 ],
@@ -40,7 +45,8 @@ class _HomeTabsState extends State<HomeTabs> {
                   indicatorColor: Color(0xFF707070),
                   labelStyle: TextStyle(
                     fontSize: SizeConfig.height(2.7),
-                  ),
+                    fontFamily: 'Futura',
+                ),
                   tabs: [
                     new Container(
                       width: SizeConfig.width(60.0),

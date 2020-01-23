@@ -48,7 +48,9 @@ class Event extends StatelessWidget {
                       padding: EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
-                          new Image.asset('assets/images/icon_location.png'),
+                          new Image.asset('assets/images/icon_location.png',
+                              height: SizeConfig.height(4),
+                              width: SizeConfig.width(4)),
                           new SizedBox(width: SizeConfig.width(2)),
                           Container(
                             padding: EdgeInsets.only(right: 15.0),
@@ -68,7 +70,9 @@ class Event extends StatelessWidget {
                       padding: EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
-                          new Image.asset('assets/images/icon_time.png'),
+                          new Image.asset('assets/images/icon_time.png',
+                              height: SizeConfig.height(4),
+                              width: SizeConfig.width(4)),
                           new SizedBox(width: SizeConfig.width(2)),
                           new Text(
                             '01.01.20 01:00-10:00',

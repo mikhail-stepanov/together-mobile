@@ -5,5 +5,5 @@ class Globals {
   static int id;
   static String pincode;
 
-  static String host = '10.0.2.2';
+  static String host = '84.201.185.226';
 }
