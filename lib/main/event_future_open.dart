@@ -63,7 +63,7 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   child: Row(
                     children: [
                       new Text(
-                        'Кросс-пати у меня дома',
+                        'TOGETHER NEW YEAR!',
                         style: TextStyle(
                             fontSize: SizeConfig.height(3.5),
                             color: Colors.white),
@@ -80,11 +80,15 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                           height: SizeConfig.height(4),
                           width: SizeConfig.width(4)),
                       new SizedBox(width: SizeConfig.width(2.7)),
-                      new Text(
-                        'Крышка Москва-Сити',
-                        style: TextStyle(
-                            fontSize: SizeConfig.height(2.5),
-                            color: Colors.white),
+                      Container(
+                        padding: EdgeInsets.only(right: 15.0),
+                        width: SizeConfig.width(80.0),
+                        child: Text(
+                          'Ресторан Центрального Дома Литераторов. Москва ул. Поварская 50/53 стр. 1',
+                          style: TextStyle(
+                              fontSize: SizeConfig.height(2.5),
+                              color: Colors.white),
+                        ),
                       ),
                     ],
                   ),
@@ -99,7 +103,7 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                           width: SizeConfig.width(4)),
                       new SizedBox(width: SizeConfig.width(2.7)),
                       new Text(
-                        '01.01.19',
+                        '01.01.20 01:00-10:00',
                         style: TextStyle(
                             fontSize: SizeConfig.height(2.5),
                             color: Colors.white),
@@ -112,7 +116,7 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   width: SizeConfig.width(90.0),
                   child: Text(
-                    "Это площадка для эксклюзивных событий!\n\nМесто, которое изначально задумывалось как вертолетная площадка, становится самым приватным пространством столицы.\n\nАбсолютно аутентичная, с невероятной видовой панорамой и энергетикой",
+                    "Новый год с TOGETHER!",
                     style: TextStyle(
                         fontSize: SizeConfig.height(2.2), color: Colors.white),
                   ),
