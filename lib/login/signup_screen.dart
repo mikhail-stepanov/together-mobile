@@ -256,31 +256,31 @@ class SignupScreenState extends State {
                       ),
                     ),
                     new SizedBox(height: SizeConfig.height(3.0)),
-                    new ButtonTheme(
-                      minWidth: SizeConfig.width(90.0),
-                      height: SizeConfig.height(7.0),
-                      child: RaisedButton(
-                        onPressed: () {
-                          if (_agreement)
-                            Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                    opaque: false,
-                                    pageBuilder:
-                                        (BuildContext context, _, __) =>
-                                            SignupPopup()));
-                        },
-                        child: Text(
-                          'Facebook',
-                          style: TextStyle(
-                            fontSize: SizeConfig.height(2.7),
-                          ),
-                        ),
-                        color: Color(0xFF1977F3),
-                        textColor: Colors.white,
-                      ),
-                    ),
-                    new SizedBox(height: SizeConfig.height(1)),
+//                    new ButtonTheme(
+//                      minWidth: SizeConfig.width(90.0),
+//                      height: SizeConfig.height(7.0),
+//                      child: RaisedButton(
+//                        onPressed: () {
+//                          if (_agreement)
+//                            Navigator.push(
+//                                context,
+//                                PageRouteBuilder(
+//                                    opaque: false,
+//                                    pageBuilder:
+//                                        (BuildContext context, _, __) =>
+//                                            SignupPopup()));
+//                        },
+//                        child: Text(
+//                          'Facebook',
+//                          style: TextStyle(
+//                            fontSize: SizeConfig.height(2.7),
+//                          ),
+//                        ),
+//                        color: Color(0xFF1977F3),
+//                        textColor: Colors.white,
+//                      ),
+//                    ),
+                    new SizedBox(height: SizeConfig.height(10)),
                   ],
                 )))));
   }
