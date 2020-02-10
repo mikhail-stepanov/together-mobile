@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:together_mobile/exceptions/exist_user.dart';
 import 'package:together_mobile/login/signup_popup.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -215,8 +217,9 @@ class SignupScreenState extends State {
                             var response = await http.post(
                                 'http://' + Globals.host + ':8080/v1/signup',
                                 headers: {
-                                  'Accept': 'application/json',
-                                  'Content-Type': 'application/json'
+                                  'Accept': 'application/json; charset=utf-8',
+                                  'Content-Type':
+                                      'application/json; charset=utf-8'
                                 },
                                 body: jsonEncode({
                                   'name': name,
@@ -225,13 +228,26 @@ class SignupScreenState extends State {
                                   'facebook': facebook,
                                   'instagram': instagram
                                 }));
-                            Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                    opaque: false,
-                                    pageBuilder:
-                                        (BuildContext context, _, __) =>
-                                            SignupPopup()));
+                            Map<String, dynamic> responseJson =
+                                json.decode(response.body);
+                            if (responseJson['error'] ==
+                                "User with this email exist") {
+                              Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder:
+                                          (BuildContext context, _, __) =>
+                                              EmailExist()));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder:
+                                          (BuildContext context, _, __) =>
+                                              SignupPopup()));
+                            }
                           }
                         },
                         child: Text(

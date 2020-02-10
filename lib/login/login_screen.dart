@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:together_mobile/exceptions/not_verified.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 import 'package:pin_view/pin_view.dart';
@@ -64,7 +65,6 @@ class LoginScreenState extends State {
                           // submit function runs with the pin
                           Globals.pincode = pin;
                           print(pin);
-
                         }),
                     new SizedBox(height: SizeConfig.height(15.0)),
                     new ButtonTheme(
@@ -73,10 +73,10 @@ class LoginScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://' + Globals.host + ':8080/v1/login',
+                              'http://' + Globals.host + ':8080/v1/login/id',
                               headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
+                                'Accept': 'application/json; charset=utf-8',
+                                'Content-Type': 'application/json; charset=utf-8'
                               },
                               body: jsonEncode({
                                 'userId': int.parse(Globals.pincode),
@@ -86,22 +86,52 @@ class LoginScreenState extends State {
                             Map<String, dynamic> responseJson =
                                 json.decode(response.body);
                             // If server returns an OK response, parse the JSON.
-                            if (responseJson['success'] == true) {
+                            if (responseJson['success'] == true &&
+                                responseJson['status'] == 1) {
                               var responseInfo = await http.post(
                                   'http://' + Globals.host + ':8080/v1/info',
                                   headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
+                                    'Accept': 'application/json; charset=utf-8',
+                                    'Content-Type': 'application/json; charset=utf-8'
                                   },
                                   body: jsonEncode({
                                     'userId': int.parse(Globals.pincode),
                                   }));
                               Map<String, dynamic> responseInfoJson =
-                              json.decode(responseInfo.body);
+                                  json.decode(responseInfo.body);
                               Globals.name = responseInfoJson['name'];
                               Globals.id = responseInfoJson['userId'];
 
-                              Navigator.pushReplacementNamed(context, '/home');
+                              Navigator.pushReplacementNamed(
+                                  context, '/setpass');
+                            }
+                            if (responseJson['success'] == true &&
+                                responseJson['status'] == 2) {
+                              var responseInfo = await http.post(
+                                  'http://' + Globals.host + ':8080/v1/info',
+                                  headers: {
+                                    'Accept': 'application/json; charset=utf-8',
+                                    'Content-Type': 'application/json; charset=utf-8'
+                                  },
+                                  body: jsonEncode({
+                                    'userId': int.parse(Globals.pincode),
+                                  }));
+                              Map<String, dynamic> responseInfoJson =
+                                  json.decode(responseInfo.body);
+                              Globals.name = responseInfoJson['name'];
+                              Globals.id = responseInfoJson['userId'];
+
+                              Navigator.pushReplacementNamed(
+                                  context, '/password');
+                            }
+                            if (responseJson['error'] == "User with this id doesn't verified") {
+                              Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder:
+                                          (BuildContext context, _, __) =>
+                                          NotVerifiedPopup()));
                             }
                           } else {
                             // If that response was not OK, throw an error.
