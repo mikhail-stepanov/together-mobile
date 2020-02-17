@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/main/tapes/attend_event_tape.dart';
-import 'package:together_mobile/profile/profile-drawer.dart';
-import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/main/tapes/ticket_tape.dart';
+import 'package:together_mobile/profile/profile_drawer.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class AttendTabs extends StatefulWidget {
@@ -60,10 +60,9 @@ class _AttendTabsState extends State<AttendTabs> {
                 ),
               ),
               body: TabBarView(
-                //TODO: ПОФИКСИТЬ ЭТОТ ПИЗДЕЦ
                 children: [
-                  AttendEventTape(),
-                  AttendEventTape(),
+                  AttendTape(),
+                  TicketTape(),
                 ],
               ),
               drawer: ProfileDrawer(),

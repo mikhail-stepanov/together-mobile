@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:together_mobile/main/event_future_open.dart';
+import 'file:///C:/Users/heirl/Documents/Projects/MobileProjects/Together/together_mobile/lib/main/open/event_future_open.dart';
+import 'package:together_mobile/main/tapes/entities/event_json.dart';
 import 'package:together_mobile/util/size_config.dart';
 
-class Event extends StatelessWidget {
+class FutureEvent extends StatelessWidget {
+  final EventJson eventJson;
+
+  const FutureEvent(this.eventJson);
+
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
@@ -10,7 +15,7 @@ class Event extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EventFutureOpen(),
+              builder: (context) => EventFutureOpen(eventJson: eventJson),
             ),
           );
         },
@@ -19,8 +24,7 @@ class Event extends StatelessWidget {
             height: SizeConfig.height(47.0),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: new NetworkImage(
-                    "https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/images/together_preview.png"),
+                image: new NetworkImage(eventJson.picBig),
                 fit: BoxFit.fill,
               ),
             ),
@@ -35,7 +39,7 @@ class Event extends StatelessWidget {
                       child: Row(
                         children: [
                           new Text(
-                            'TOGETHER NEW YEAR (21+)',
+                            eventJson.title,
                             style: TextStyle(
                                 fontSize: SizeConfig.height(2.7),
                                 color: Colors.white),
@@ -56,7 +60,7 @@ class Event extends StatelessWidget {
                             padding: EdgeInsets.only(right: 15.0),
                             width: SizeConfig.width(80.0),
                             child: Text(
-                              'Ресторан Центрального Дома Литераторов. Москва ул. Поварская 50/53 стр. 1',
+                              eventJson.place,
                               style: TextStyle(
                                   fontSize: SizeConfig.height(2.2),
                                   color: Colors.white),
@@ -75,7 +79,7 @@ class Event extends StatelessWidget {
                               width: SizeConfig.width(4)),
                           new SizedBox(width: SizeConfig.width(2)),
                           new Text(
-                            '01.01.20 01:00-10:00',
+                            eventJson.date,
                             style: TextStyle(
                                 fontSize: SizeConfig.height(2.2),
                                 color: Colors.white),

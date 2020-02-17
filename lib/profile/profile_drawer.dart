@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/util/refresh_globals_event.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class ProfileDrawer extends StatelessWidget {
@@ -50,6 +51,7 @@ class ProfileDrawer extends StatelessWidget {
                       padding: EdgeInsets.only(right: 25.0),
                       color: Color(0x00000000),
                       onPressed: () {
+                        RefreshEvents.refresh();
                         Navigator.pushReplacementNamed(context, '/home');
                       },
                       child: Text(
@@ -63,10 +65,11 @@ class ProfileDrawer extends StatelessWidget {
                       padding: EdgeInsets.only(right: 25.0),
                       color: Color(0x00000000),
                       onPressed: () {
+                        RefreshEvents.refresh();
                         Navigator.pushReplacementNamed(context, '/attend');
                       },
                       child: Text(
-                        'БИЛЕТЫ',
+                        'МОИ МЕРОПРИЯТИЯ',
                         style: TextStyle(
                             fontSize: SizeConfig.height(2.7),
                             color: Colors.white),
@@ -76,10 +79,11 @@ class ProfileDrawer extends StatelessWidget {
                       padding: EdgeInsets.only(right: 25.0),
                       color: Color(0x00000000),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/attend');
+                        RefreshEvents.refresh();
+                        Navigator.pushReplacementNamed(context, '/settings');
                       },
                       child: Text(
-                        'ПРОШЛЫЕ МЕРОПРИЯТИЯ',
+                        'НАСТРОЙКИ',
                         style: TextStyle(
                             fontSize: SizeConfig.height(2.7),
                             color: Colors.white),

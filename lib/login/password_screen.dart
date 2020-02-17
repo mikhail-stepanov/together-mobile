@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pin_view/pin_view.dart';
 import 'package:together_mobile/exceptions/wrong_password.dart';
 import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/util/refresh_globals_event.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class PasswordScreen extends StatefulWidget {
@@ -102,7 +103,12 @@ class PasswordScreenState extends State {
                               Map<String, dynamic> responseInfoJson =
                                   json.decode(responseInfo.body);
                               Globals.name = responseInfoJson['name'];
+                              Globals.facebook = responseInfoJson['facebook'];
+                              Globals.instagram = responseInfoJson['instagram'];
+                              Globals.phone = responseInfoJson['phone'];
                               Globals.id = responseInfoJson['userId'];
+
+                              RefreshEvents.refresh();
 
                               Navigator.pushReplacementNamed(context, '/home');
                             }

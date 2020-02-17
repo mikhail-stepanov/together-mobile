@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:together_mobile/main/tapes/future_event_tape.dart';
-import 'package:together_mobile/main/tapes/old_event_tape.dart';
-import 'package:together_mobile/profile/profile-drawer.dart';
-import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/main/tapes/past_event_tape.dart';
+import 'package:together_mobile/profile/profile_drawer.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class HomeTabs extends StatefulWidget {
@@ -65,7 +64,7 @@ class _HomeTabsState extends State<HomeTabs> {
               body: TabBarView(
                 children: [
                   FutureEventTape(),
-                  OldEventTape(),
+                  PastEventTape(),
                 ],
               ),
               drawer: ProfileDrawer(),

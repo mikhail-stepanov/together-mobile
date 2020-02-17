@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:together_mobile/main/event_future_open.dart';
+import 'package:together_mobile/main/open/event_past_open.dart';
+import 'package:together_mobile/main/tapes/entities/event_json.dart';
 import 'package:together_mobile/util/size_config.dart';
 
-class EventOther extends StatelessWidget {
+class PastEvent extends StatelessWidget {
+  final EventJson eventJson;
+
+  const PastEvent(this.eventJson);
+
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
@@ -10,18 +15,16 @@ class EventOther extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EventFutureOpen(),
+              builder: (context) => EventPastOpen(eventJson: eventJson),
             ),
           );
         },
         child: Container(
-            margin: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0),
-            height: SizeConfig.height(60.0),
-            width: SizeConfig.width(40.0),
+            margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 15.0),
+            height: SizeConfig.height(47.0),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: new NetworkImage(
-                    "https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/images/together_preview_2.png"),
+                image: new NetworkImage(eventJson.picBig),
                 fit: BoxFit.fill,
               ),
             ),
@@ -32,13 +35,13 @@ class EventOther extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 10.0, top: 70.0),
+                      padding: EdgeInsets.only(left: 15.0, top: 180.0),
                       child: Row(
                         children: [
                           new Text(
-                            'TOGETHER NY',
+                            eventJson.title,
                             style: TextStyle(
-                                fontSize: SizeConfig.height(1.8),
+                                fontSize: SizeConfig.height(2.7),
                                 color: Colors.white),
                           ),
                         ],
@@ -46,20 +49,20 @@ class EventOther extends StatelessWidget {
                     ),
                     new SizedBox(height: SizeConfig.height(2.0)),
                     Container(
-                      padding: EdgeInsets.only(left: 10.0),
+                      padding: EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
                           new Image.asset('assets/images/icon_location.png',
                               height: SizeConfig.height(4),
                               width: SizeConfig.width(4)),
-                          new SizedBox(width: SizeConfig.width(1.5)),
-                          new Container(
+                          new SizedBox(width: SizeConfig.width(2)),
+                          Container(
                             padding: EdgeInsets.only(right: 15.0),
-                            width: SizeConfig.width(30.0),
+                            width: SizeConfig.width(80.0),
                             child: Text(
-                              'Ресторан Центрального Дома Литераторов',
+                              eventJson.place,
                               style: TextStyle(
-                                  fontSize: SizeConfig.height(1.5),
+                                  fontSize: SizeConfig.height(2.2),
                                   color: Colors.white),
                             ),
                           ),
@@ -68,17 +71,17 @@ class EventOther extends StatelessWidget {
                     ),
                     new SizedBox(height: SizeConfig.height(1.0)),
                     Container(
-                      padding: EdgeInsets.only(left: 10.0),
+                      padding: EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
                           new Image.asset('assets/images/icon_time.png',
                               height: SizeConfig.height(4),
                               width: SizeConfig.width(4)),
-                          new SizedBox(width: SizeConfig.width(1.5)),
+                          new SizedBox(width: SizeConfig.width(2)),
                           new Text(
-                            '01.01.20 01:00-10:00',
+                            eventJson.date,
                             style: TextStyle(
-                                fontSize: SizeConfig.height(1.5),
+                                fontSize: SizeConfig.height(2.2),
                                 color: Colors.white),
                           ),
                         ],

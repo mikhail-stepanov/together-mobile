@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:together_mobile/main/attend_tabs.dart';
-import 'package:together_mobile/main/home_tabs.dart';
-import 'package:together_mobile/main/tapes/entities/event_null.dart';
-import 'package:together_mobile/profile/profile-drawer.dart';
+import 'package:together_mobile/main/tapes/entities/event_json.dart';
+import 'package:together_mobile/main/tapes/models/event_future_small_card.dart';
+import 'package:together_mobile/main/tapes/models/event_null.dart';
+import 'package:together_mobile/profile/profile_drawer.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 import 'package:together_mobile/util/video_player.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventFutureOpen extends StatefulWidget {
+  final EventJson eventJson;
+
+  const EventFutureOpen({Key key, this.eventJson}) : super(key: key);
+
   @override
   _EventFutureOpenState createState() => new _EventFutureOpenState();
 }
@@ -52,19 +57,14 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
               children: [
                 Container(
                   height: SizeConfig.height(46),
-                  child: VideoPlayerScreen(),
+                  child: VideoPlayerScreen(videoUrl: widget.eventJson.video),
                 ),
-//                Image.network(
-//                    "https://moi-portal.ru/upload/iblock/f59/f59562c12f5e58cf69c4412d59d5a7b1.jpg",
-//                    fit: BoxFit.fill,
-//                    height: SizeConfig.height(45.0),
-//                    width: SizeConfig.width(100.0)),
                 Container(
                   padding: EdgeInsets.only(left: 15.0, top: 15.0),
                   child: Row(
                     children: [
                       new Text(
-                        'TOGETHER NEW YEAR!',
+                        widget.eventJson.title,
                         style: TextStyle(
                             fontSize: SizeConfig.height(3.5),
                             color: Colors.white),
@@ -85,7 +85,7 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                         padding: EdgeInsets.only(right: 15.0),
                         width: SizeConfig.width(80.0),
                         child: Text(
-                          'Ресторан Центрального Дома Литераторов. Москва ул. Поварская 50/53 стр. 1',
+                          widget.eventJson.place,
                           style: TextStyle(
                               fontSize: SizeConfig.height(2.5),
                               color: Colors.white),
@@ -104,7 +104,7 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                           width: SizeConfig.width(4)),
                       new SizedBox(width: SizeConfig.width(2.7)),
                       new Text(
-                        '01.01.20 01:00-10:00',
+                        widget.eventJson.date,
                         style: TextStyle(
                             fontSize: SizeConfig.height(2.5),
                             color: Colors.white),
@@ -117,30 +117,32 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   width: SizeConfig.width(90.0),
                   child: Text(
-                    "Новый год с TOGETHER!",
+                    widget.eventJson.description,
                     style: TextStyle(
                         fontSize: SizeConfig.height(2.2), color: Colors.white),
                   ),
                 ),
                 new SizedBox(height: SizeConfig.height(4.0)),
-//                Container(
-//                  padding: EdgeInsets.only(left: 20.0),
-//                  child: ButtonTheme(
-//                    minWidth: SizeConfig.width(90.0),
-//                    height: SizeConfig.height(7.0),
-//                    child: RaisedButton(
-//                      onPressed: () {},
-//                      child: Text(
-//                        'Купить билет',
-//                        style: TextStyle(
-//                          fontSize: SizeConfig.height(3),
-//                        ),
-//                      ),
-//                      color: Color(0xFF707070),
-//                      textColor: Colors.white,
-//                    ),
-//                  ),
-//                ),
+                Container(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: ButtonTheme(
+                    minWidth: SizeConfig.width(90.0),
+                    height: SizeConfig.height(7.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        launch(widget.eventJson.ticketcloud);
+                      },
+                      child: Text(
+                        'Купить билет',
+                        style: TextStyle(
+                          fontSize: SizeConfig.height(3),
+                        ),
+                      ),
+                      color: Color(0xFF707070),
+                      textColor: Colors.white,
+                    ),
+                  ),
+                ),
                 new SizedBox(height: SizeConfig.height(4.0)),
                 Container(
                   padding: EdgeInsets.only(left: 20.0, right: 15.0),
@@ -156,12 +158,33 @@ class _EventFutureOpenState extends State<EventFutureOpen> {
                   margin: EdgeInsets.symmetric(vertical: 10.0),
                   padding: EdgeInsets.only(left: 15.0),
                   height: SizeConfig.height(30.0),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 1,
-                    itemBuilder: (context, index) => EventNull(),
-                  ),
+                  child: Globals.futureEvents == null ||
+                          Globals.futureEvents.isEmpty ||
+                          Globals.futureEvents.length == 0
+                      ? Scaffold(
+                          body: Container(
+                              color: Color(0xFF231F20),
+                              alignment: Alignment.topCenter,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 1,
+                                itemBuilder: (context, index) => EventNull(),
+                              )),
+                        )
+                      : Scaffold(
+                          body: Container(
+                              color: Color(0xFF231F20),
+                              alignment: Alignment.topCenter,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: Globals.futureEvents.length,
+                                itemBuilder: (context, index) =>
+                                    FutureEventSmall(
+                                        Globals.futureEvents[index]),
+                              )),
+                        ),
                 ),
                 new SizedBox(height: SizeConfig.height(2.0)),
               ],

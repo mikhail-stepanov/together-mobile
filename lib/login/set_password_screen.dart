@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pin_view/pin_view.dart';
 import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/util/refresh_globals_event.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class SetPasswordScreen extends StatefulWidget {
@@ -75,7 +76,8 @@ class SetPasswordScreenState extends State {
                               'http://' + Globals.host + ':8080/v1/setpass',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
-                                'Content-Type': 'application/json; charset=utf-8'
+                                'Content-Type':
+                                    'application/json; charset=utf-8'
                               },
                               body: jsonEncode({
                                 'userId': int.parse(Globals.pincode),
@@ -90,7 +92,8 @@ class SetPasswordScreenState extends State {
                                   'http://' + Globals.host + ':8080/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
-                                    'Content-Type': 'application/json; charset=utf-8'
+                                    'Content-Type':
+                                        'application/json; charset=utf-8'
                                   },
                                   body: jsonEncode({
                                     'userId': int.parse(Globals.pincode),
@@ -98,7 +101,12 @@ class SetPasswordScreenState extends State {
                               Map<String, dynamic> responseInfoJson =
                                   json.decode(responseInfo.body);
                               Globals.name = responseInfoJson['name'];
+                              Globals.facebook = responseInfoJson['facebook'];
+                              Globals.instagram = responseInfoJson['instagram'];
+                              Globals.phone = responseInfoJson['phone'];
                               Globals.id = responseInfoJson['userId'];
+
+                              RefreshEvents.refresh();
 
                               Navigator.pushReplacementNamed(context, '/home');
                             }

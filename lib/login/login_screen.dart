@@ -73,7 +73,7 @@ class LoginScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://' + Globals.host + ':8080/v1/login/id',
+                              'http://' + Globals.host + ':8080/v1/login',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
                                 'Content-Type': 'application/json; charset=utf-8'

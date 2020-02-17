@@ -32,6 +32,7 @@ class SignupScreenState extends State {
             padding: EdgeInsets.only(left: 20.0, right: 20.0),
             color: Color(0xFF231F20),
             child: new Form(
+                autovalidate: true,
                 key: _formKey,
                 child: SingleChildScrollView(
                     child: Column(
@@ -46,7 +47,7 @@ class SignupScreenState extends State {
                     ),
                     new SizedBox(height: SizeConfig.height(6.0)),
                     new Text(
-                      'Имя и фамилия:',
+                      'Фамилия и имя:',
                       style: TextStyle(
                           fontSize: SizeConfig.height(2.3),
                           color: Colors.white),
@@ -68,8 +69,11 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите свое имя';
-                        }),
+                            return 'Пожалуйста введите имя';
+                          else
+                            return null;
+                        },
+                        onSaved: (String val) => {}),
                     new SizedBox(height: SizeConfig.height(2.5)),
                     new Text(
                       'Номер телефона:',
@@ -94,8 +98,11 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите свой телефон';
-                        }),
+                            return 'Пожалуйста введите Телефон';
+                          else
+                            return null;
+                        },
+                        onSaved: (String val) => {}),
                     new SizedBox(height: SizeConfig.height(2.5)),
                     new Text(
                       'Email:',
@@ -120,12 +127,9 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите свой Email';
-                          String p =
-                              r'[a-zA-Z0-9+.\_\%-+]{1,256}@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+';
-                          RegExp regExp = new RegExp(p);
-                          if (regExp.hasMatch(value)) return null;
-                          return 'Некорректный Email';
+                            return 'Пожалуйста введите Email';
+                          else
+                            return null;
                         }),
                     new SizedBox(height: SizeConfig.height(2.5)),
                     new Text(
@@ -151,7 +155,9 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите ссылку на одну из соцсетей';
+                            return 'Пожалуйста введите ссылку на Facebook';
+                          else
+                            return null;
                         }),
                     new SizedBox(height: SizeConfig.height(2.5)),
                     new Text(
@@ -177,7 +183,9 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите ссылку на одну из соцсетей';
+                            return 'Пожалуйста введите ссылку на Instagram';
+                          else
+                            return null;
                         }),
                     new SizedBox(height: SizeConfig.height(1.8)),
                     new Row(children: [
@@ -208,7 +216,12 @@ class SignupScreenState extends State {
                       height: SizeConfig.height(7.0),
                       child: RaisedButton(
                         onPressed: () async {
-                          if (_agreement) {
+                          if (_agreement &&
+                              _nameController.text.length > 0 &&
+                              _phoneController.text.length > 0 &&
+                              _emailController.text.length > 0 &&
+                              _facebookController.text.length > 0 &&
+                              _instagramController.text.length > 0) {
                             String name = _nameController.text;
                             String phone = _phoneController.text;
                             String email = _emailController.text;
@@ -261,17 +274,17 @@ class SignupScreenState extends State {
                       ),
                     ),
                     new SizedBox(height: SizeConfig.height(3.0)),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.width(42.0)),
-                      child: Text(
-                        'или',
-                        style: TextStyle(
-                            fontSize: SizeConfig.height(2),
-                            color: Color(0xFF707070)),
-                      ),
-                    ),
-                    new SizedBox(height: SizeConfig.height(3.0)),
+//                    Container(
+//                      padding: EdgeInsets.symmetric(
+//                          horizontal: SizeConfig.width(42.0)),
+//                      child: Text(
+//                        'или',
+//                        style: TextStyle(
+//                            fontSize: SizeConfig.height(2),
+//                            color: Color(0xFF707070)),
+//                      ),
+//                    ),
+//                    new SizedBox(height: SizeConfig.height(3.0)),
 //                    new ButtonTheme(
 //                      minWidth: SizeConfig.width(90.0),
 //                      height: SizeConfig.height(7.0),

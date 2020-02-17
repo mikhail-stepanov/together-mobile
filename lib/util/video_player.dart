@@ -6,7 +6,9 @@ import 'package:together_mobile/util/visibility/visibility_detector.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  VideoPlayerScreen({Key key}) : super(key: key);
+  final String videoUrl;
+
+  const VideoPlayerScreen({Key key, this.videoUrl}) : super(key: key);
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -22,7 +24,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // offers several different constructors to play videos from assets, files,
     // or the internet.
     controller = VideoPlayerController.network(
-      'https://raw.githubusercontent.com/mikhail-stepanov/together-mobile/master/assets/videos/together_ny.mp4',
+      widget.videoUrl,
     );
 
     // Initialize the controller and store the Future for later use.

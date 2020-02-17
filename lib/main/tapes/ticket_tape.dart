@@ -5,20 +5,20 @@ import 'package:together_mobile/util/refresh_globals_event.dart';
 
 import 'models/event_null.dart';
 
-class FutureEventTape extends StatefulWidget {
+class TicketTape extends StatefulWidget {
   @override
-  createState() => new FutureEventTapeState();
+  createState() => new TicketTapeState();
 }
 
-class FutureEventTapeState extends State<FutureEventTape> {
+class TicketTapeState extends State<TicketTape> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       color: Color(0xFF707070),
       backgroundColor: Color(0xFF231F20),
-      child: Globals.futureEvents == null ||
-              Globals.futureEvents.isEmpty ||
-              Globals.futureEvents.length == 0
+      child: Globals.futureUserEvents == null ||
+              Globals.futureUserEvents.isEmpty ||
+              Globals.futureUserEvents.length == 0
           ? Scaffold(
               body: Container(
                   color: Color(0xFF231F20),
@@ -33,9 +33,9 @@ class FutureEventTapeState extends State<FutureEventTape> {
                   color: Color(0xFF231F20),
                   alignment: Alignment.topCenter,
                   child: ListView.builder(
-                    itemCount: Globals.futureEvents.length,
+                    itemCount: Globals.futureUserEvents.length,
                     itemBuilder: (context, index) =>
-                        FutureEvent(Globals.futureEvents[index]),
+                        FutureEvent(Globals.futureUserEvents[index]),
                   )),
             ),
       onRefresh: () => _refreshState(),
