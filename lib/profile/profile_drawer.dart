@@ -30,7 +30,7 @@ class ProfileDrawer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            Globals.name,
+                            Globals.lastName + ' ' + Globals.firstName,
                             style: TextStyle(
                                 fontSize: SizeConfig.height(2.3),
                                 color: Colors.white),

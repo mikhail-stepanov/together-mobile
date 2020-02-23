@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:together_mobile/exceptions/server_error.dart';
 import 'package:together_mobile/exceptions/success_settings.dart';
 import 'package:together_mobile/profile/profile_drawer.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
-import 'package:http/http.dart' as http;
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -20,8 +20,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   final color_text = Color(0xFF707070);
 
-  final TextEditingController _nameController =
-      TextEditingController(text: Globals.name);
+  final TextEditingController _firstNameController =
+      TextEditingController(text: Globals.firstName);
+  final TextEditingController _lastNameController =
+      TextEditingController(text: Globals.lastName);
   final TextEditingController _phoneController =
       TextEditingController(text: Globals.phone);
   final TextEditingController _facebookController =
@@ -76,12 +78,35 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   new SizedBox(height: SizeConfig.height(6.0)),
                   new Text(
-                    'Фамилия и имя:',
+                    'Фамилия:',
                     style: TextStyle(
                         fontSize: SizeConfig.height(2.3), color: Colors.white),
                   ),
                   new TextFormField(
-                      controller: _nameController,
+                      controller: _lastNameController,
+                      decoration: new InputDecoration(
+                          focusedBorder: new UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                            color: color_text,
+                          )),
+                          enabledBorder: new UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                            color: color_text,
+                          ))),
+                      cursorColor: color_text,
+                      style: TextStyle(
+                          fontSize: SizeConfig.height(2.3), color: color_text),
+                      validator: (value) {
+                        if (value.isEmpty) return 'Пожалуйста введите свое имя';
+                      }),
+                  new SizedBox(height: SizeConfig.height(2.5)),
+                  new Text(
+                    'Имя:',
+                    style: TextStyle(
+                        fontSize: SizeConfig.height(2.3), color: Colors.white),
+                  ),
+                  new TextFormField(
+                      controller: _firstNameController,
                       decoration: new InputDecoration(
                           focusedBorder: new UnderlineInputBorder(
                               borderSide: new BorderSide(
@@ -175,7 +200,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     height: SizeConfig.height(7.0),
                     child: RaisedButton(
                       onPressed: () async {
-                        String name = _nameController.text;
+                        String firstName = _firstNameController.text;
+                        String lastName = _lastNameController.text;
                         String phone = _phoneController.text;
                         String facebook = _facebookController.text;
                         String instagram = _instagramController.text;
@@ -187,7 +213,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             },
                             body: jsonEncode({
                               'userId': Globals.id,
-                              'name': name,
+                              'firstName': firstName,
+                              'lastName': lastName,
                               'phone': phone,
                               'facebook': facebook,
                               'instagram': instagram
@@ -204,6 +231,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   pageBuilder: (BuildContext context, _, __) =>
                                       ServerErrorPopup()));
                         } else {
+                          Globals.firstName = firstName;
+                          Globals.lastName = lastName;
                           Navigator.push(
                               context,
                               PageRouteBuilder(

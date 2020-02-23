@@ -102,7 +102,8 @@ class PasswordScreenState extends State {
                                   }));
                               Map<String, dynamic> responseInfoJson =
                                   json.decode(responseInfo.body);
-                              Globals.name = responseInfoJson['name'];
+                              Globals.firstName = responseInfoJson['firstName'];
+                              Globals.lastName = responseInfoJson['lastName'];
                               Globals.facebook = responseInfoJson['facebook'];
                               Globals.instagram = responseInfoJson['instagram'];
                               Globals.phone = responseInfoJson['phone'];

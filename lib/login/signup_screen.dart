@@ -17,7 +17,8 @@ class SignupScreenState extends State {
 
   final color_text = Color(0xFF707070);
   bool _agreement = false;
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _phoneController =
       TextEditingController(text: '+7');
   final TextEditingController _emailController = TextEditingController();
@@ -47,13 +48,42 @@ class SignupScreenState extends State {
                     ),
                     new SizedBox(height: SizeConfig.height(6.0)),
                     new Text(
-                      'Фамилия и имя:',
+                      'Фамилия:',
                       style: TextStyle(
                           fontSize: SizeConfig.height(2.3),
                           color: Colors.white),
                     ),
                     new TextFormField(
-                        controller: _nameController,
+                        controller: _lastNameController,
+                        decoration: new InputDecoration(
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            )),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide: new BorderSide(
+                              color: color_text,
+                            ))),
+                        cursorColor: color_text,
+                        style: TextStyle(
+                            fontSize: SizeConfig.height(2.3),
+                            color: color_text),
+                        validator: (value) {
+                          if (value.isEmpty)
+                            return 'Пожалуйста введите фамилию';
+                          else
+                            return null;
+                        },
+                        onSaved: (String val) => {}),
+                    new SizedBox(height: SizeConfig.height(2.5)),
+                    new Text(
+                      'Имя:',
+                      style: TextStyle(
+                          fontSize: SizeConfig.height(2.3),
+                          color: Colors.white),
+                    ),
+                    new TextFormField(
+                        controller: _firstNameController,
                         decoration: new InputDecoration(
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide: new BorderSide(
@@ -127,7 +157,7 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите Email';
+                            return 'Пожалуйста введите ссылку на одну из соцсетей';
                           else
                             return null;
                         }),
@@ -155,7 +185,7 @@ class SignupScreenState extends State {
                             color: color_text),
                         validator: (value) {
                           if (value.isEmpty)
-                            return 'Пожалуйста введите ссылку на Facebook';
+                            return 'Пожалуйста введите ссылку на одну из соцсетей';
                           else
                             return null;
                         }),
@@ -217,12 +247,14 @@ class SignupScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           if (_agreement &&
-                              _nameController.text.length > 0 &&
-                              _phoneController.text.length > 0 &&
-                              _emailController.text.length > 0 &&
-                              _facebookController.text.length > 0 &&
+                                  _firstNameController.text.length > 0 &&
+                                  _lastNameController.text.length > 0 &&
+                                  _phoneController.text.length > 0 &&
+                                  _emailController.text.length > 0 &&
+                                  _facebookController.text.length > 0 ||
                               _instagramController.text.length > 0) {
-                            String name = _nameController.text;
+                            String firstName = _firstNameController.text;
+                            String lastName = _lastNameController.text;
                             String phone = _phoneController.text;
                             String email = _emailController.text;
                             String facebook = _facebookController.text;
@@ -235,7 +267,8 @@ class SignupScreenState extends State {
                                       'application/json; charset=utf-8'
                                 },
                                 body: jsonEncode({
-                                  'name': name,
+                                  'firstName': firstName,
+                                  'lastName': lastName,
                                   'phone': phone,
                                   'email': email,
                                   'facebook': facebook,
@@ -274,41 +307,6 @@ class SignupScreenState extends State {
                       ),
                     ),
                     new SizedBox(height: SizeConfig.height(3.0)),
-//                    Container(
-//                      padding: EdgeInsets.symmetric(
-//                          horizontal: SizeConfig.width(42.0)),
-//                      child: Text(
-//                        'или',
-//                        style: TextStyle(
-//                            fontSize: SizeConfig.height(2),
-//                            color: Color(0xFF707070)),
-//                      ),
-//                    ),
-//                    new SizedBox(height: SizeConfig.height(3.0)),
-//                    new ButtonTheme(
-//                      minWidth: SizeConfig.width(90.0),
-//                      height: SizeConfig.height(7.0),
-//                      child: RaisedButton(
-//                        onPressed: () {
-//                          if (_agreement)
-//                            Navigator.push(
-//                                context,
-//                                PageRouteBuilder(
-//                                    opaque: false,
-//                                    pageBuilder:
-//                                        (BuildContext context, _, __) =>
-//                                            SignupPopup()));
-//                        },
-//                        child: Text(
-//                          'Facebook',
-//                          style: TextStyle(
-//                            fontSize: SizeConfig.height(2.7),
-//                          ),
-//                        ),
-//                        color: Color(0xFF1977F3),
-//                        textColor: Colors.white,
-//                      ),
-//                    ),
                     new SizedBox(height: SizeConfig.height(10)),
                   ],
                 )))));

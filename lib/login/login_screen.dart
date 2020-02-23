@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:pin_view/pin_view.dart';
 import 'package:together_mobile/exceptions/not_verified.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
-import 'package:pin_view/pin_view.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -76,7 +77,8 @@ class LoginScreenState extends State {
                               'http://' + Globals.host + ':8080/v1/login',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
-                                'Content-Type': 'application/json; charset=utf-8'
+                                'Content-Type':
+                                    'application/json; charset=utf-8'
                               },
                               body: jsonEncode({
                                 'userId': int.parse(Globals.pincode),
@@ -92,14 +94,16 @@ class LoginScreenState extends State {
                                   'http://' + Globals.host + ':8080/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
-                                    'Content-Type': 'application/json; charset=utf-8'
+                                    'Content-Type':
+                                        'application/json; charset=utf-8'
                                   },
                                   body: jsonEncode({
                                     'userId': int.parse(Globals.pincode),
                                   }));
                               Map<String, dynamic> responseInfoJson =
                                   json.decode(responseInfo.body);
-                              Globals.name = responseInfoJson['name'];
+                              Globals.firstName = responseInfoJson['firstName'];
+                              Globals.lastName = responseInfoJson['lastName'];
                               Globals.id = responseInfoJson['userId'];
 
                               Navigator.pushReplacementNamed(
@@ -111,27 +115,30 @@ class LoginScreenState extends State {
                                   'http://' + Globals.host + ':8080/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
-                                    'Content-Type': 'application/json; charset=utf-8'
+                                    'Content-Type':
+                                        'application/json; charset=utf-8'
                                   },
                                   body: jsonEncode({
                                     'userId': int.parse(Globals.pincode),
                                   }));
                               Map<String, dynamic> responseInfoJson =
                                   json.decode(responseInfo.body);
-                              Globals.name = responseInfoJson['name'];
+                              Globals.firstName = responseInfoJson['firstName'];
+                              Globals.lastName = responseInfoJson['lastName'];
                               Globals.id = responseInfoJson['userId'];
 
                               Navigator.pushReplacementNamed(
                                   context, '/password');
                             }
-                            if (responseJson['error'] == "User with this id doesn't verified") {
+                            if (responseJson['error'] ==
+                                "User with this id doesn't verified") {
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                       opaque: false,
                                       pageBuilder:
                                           (BuildContext context, _, __) =>
-                                          NotVerifiedPopup()));
+                                              NotVerifiedPopup()));
                             }
                           } else {
                             // If that response was not OK, throw an error.

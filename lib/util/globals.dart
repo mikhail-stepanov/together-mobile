@@ -2,7 +2,8 @@ import 'package:together_mobile/main/tapes/entities/event_json.dart';
 
 class Globals {
 
-  static String name;
+  static String firstName;
+  static String lastName;
   static int id;
   static String pincode;
   static String password;
