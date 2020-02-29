@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pin_view/pin_view.dart';
 import 'package:together_mobile/exceptions/not_verified.dart';
+import 'package:together_mobile/push/push_notifications.dart';
 import 'package:together_mobile/util/globals.dart';
 import 'package:together_mobile/util/size_config.dart';
 
@@ -20,6 +21,9 @@ class LoginScreenState extends State {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    PushNotificationsManager pushNotificationsManager =
+        new PushNotificationsManager();
+    pushNotificationsManager.init();
 
     return Scaffold(
         body: new Container(
