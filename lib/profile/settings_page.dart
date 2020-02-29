@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +8,7 @@ import 'package:together_mobile/exceptions/server_error.dart';
 import 'package:together_mobile/exceptions/success_settings.dart';
 import 'package:together_mobile/profile/profile_drawer.dart';
 import 'package:together_mobile/util/globals.dart';
+import 'package:together_mobile/util/refresh_globals_event.dart';
 import 'package:together_mobile/util/size_config.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -231,8 +234,43 @@ class _SettingsPageState extends State<SettingsPage> {
                                   pageBuilder: (BuildContext context, _, __) =>
                                       ServerErrorPopup()));
                         } else {
-                          Globals.firstName = firstName;
-                          Globals.lastName = lastName;
+                          var responseInfo = await http.post(
+                              'http://' + Globals.host + ':8080/v1/info',
+                              headers: {
+                                'Accept': 'application/json; charset=utf-8',
+                                'Content-Type':
+                                    'application/json; charset=utf-8'
+                              },
+                              body: jsonEncode({
+                                'userId': int.parse(Globals.pincode),
+                              }));
+                          Map<String, dynamic> responseInfoJson =
+                              json.decode(responseInfo.body);
+                          Globals.firstName = responseInfoJson['firstName'];
+                          Globals.lastName = responseInfoJson['lastName'];
+                          Globals.facebook = responseInfoJson['facebook'];
+                          Globals.instagram = responseInfoJson['instagram'];
+                          Globals.phone = responseInfoJson['phone'];
+                          Globals.id = responseInfoJson['userId'];
+                          Globals.user_pic = responseInfoJson['picId'];
+
+                          var responseImage = await http.post(
+                              'http://' + Globals.host + ':8080/v1/image/get',
+                              headers: {
+                                'Accept': 'application/json; charset=utf-8',
+                                'Content-Type':
+                                    'application/json; charset=utf-8'
+                              },
+                              body: jsonEncode({
+                                'id': Globals.user_pic,
+                              }));
+                          Map<String, dynamic> responseImageJson =
+                              json.decode(responseImage.body);
+                          String encodedStr = responseImageJson['content'];
+                          Uint8List bytes = base64Decode(encodedStr);
+                          Globals.user_image = bytes;
+
+                          RefreshEvents.refresh();
                           Navigator.push(
                               context,
                               PageRouteBuilder(

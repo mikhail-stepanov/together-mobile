@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -108,6 +110,22 @@ class PasswordScreenState extends State {
                               Globals.instagram = responseInfoJson['instagram'];
                               Globals.phone = responseInfoJson['phone'];
                               Globals.id = responseInfoJson['userId'];
+                              Globals.user_pic = responseInfoJson['picId'];
+
+                              var responseImage = await http.post(
+                                  'http://' + Globals.host + ':8080/v1/image/get',
+                                  headers: {
+                                    'Accept': 'application/json; charset=utf-8',
+                                    'Content-Type':
+                                    'application/json; charset=utf-8'
+                                  },
+                                  body: jsonEncode({
+                                    'id': Globals.user_pic,
+                                  }));
+                              Map<String, dynamic> responseImageJson = json.decode(responseImage.body);
+                              String encodedStr = responseImageJson['content'];
+                              Uint8List bytes = base64Decode(encodedStr);
+                              Globals.user_image = bytes;
 
                               RefreshEvents.refresh();
 
