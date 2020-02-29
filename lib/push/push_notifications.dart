@@ -16,6 +16,7 @@ class PushNotificationsManager extends StatelessWidget {
     if (!_initialized) {
       // For iOS request permission first.
       _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging.subscribeToTopic('new_event');
       _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
           print("onMessage: $message");
