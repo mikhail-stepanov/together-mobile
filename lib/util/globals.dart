@@ -19,6 +19,6 @@ class Globals {
   static List<EventJson> pastUserEvents;
   static List<EventJson> futureUserEvents;
 
-  static String host = '10.0.2.2';
-  static String version = "1.0.9";
+  static String host = '84.201.185.226';
+  static String version = "1.0.11";
 }
