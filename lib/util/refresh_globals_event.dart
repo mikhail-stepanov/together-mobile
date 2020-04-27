@@ -8,7 +8,7 @@ class RefreshEvents {
   static Future<void> refresh() async {
     //future events
     var urlFutureEvent =
-        'http://' + Globals.host + ':8080/v1/event/list/future';
+        Globals.host + '/v1/event/list/future';
     var responseFutureEvent = await http.get(urlFutureEvent, headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Accept': 'application/json; charset=utf-8'
@@ -23,7 +23,7 @@ class RefreshEvents {
     Globals.futureEvents = futureEvents;
 
     //past events
-    var urlPastEvent = 'http://' + Globals.host + ':8080/v1/event/list/past';
+    var urlPastEvent = Globals.host + '/v1/event/list/past';
     var responsePastEvent = await http.get(urlPastEvent, headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Accept': 'application/json; charset=utf-8'
@@ -39,7 +39,7 @@ class RefreshEvents {
 
     //user future events
     var urlUserFutureEvent =
-        'http://' + Globals.host + ':8080/v1/event/list/future/user';
+        Globals.host + '/v1/event/list/future/user';
     var responseUserFutureEvent = await http.post(urlUserFutureEvent,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -57,7 +57,7 @@ class RefreshEvents {
 
     //user past events
     var urlUserPastEvent =
-        'http://' + Globals.host + ':8080/v1/event/list/past/user';
+        Globals.host + '/v1/event/list/past/user';
     var responseUserPastEvent = await http.post(urlUserPastEvent,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',

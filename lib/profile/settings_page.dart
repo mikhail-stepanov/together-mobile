@@ -209,7 +209,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         String facebook = _facebookController.text;
                         String instagram = _instagramController.text;
                         var response = await http.post(
-                            'http://' + Globals.host + ':8080/v1/user/update',
+                            Globals.host + '/v1/user/update',
                             headers: {
                               'Accept': 'application/json; charset=utf-8',
                               'Content-Type': 'application/json; charset=utf-8'
@@ -235,7 +235,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ServerErrorPopup()));
                         } else {
                           var responseInfo = await http.post(
-                              'http://' + Globals.host + ':8080/v1/info',
+                              Globals.host + '/v1/info',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
                                 'Content-Type':
@@ -255,7 +255,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           Globals.user_pic = responseInfoJson['picId'];
 
                           var responseImage = await http.post(
-                              'http://' + Globals.host + ':8080/v1/image/get',
+                              Globals.host + '/v1/image/get',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
                                 'Content-Type':

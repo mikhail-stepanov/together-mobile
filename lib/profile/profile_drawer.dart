@@ -42,9 +42,7 @@ class ProfileDrawer extends StatelessWidget {
                             String fileName = file.path.split("/").last;
 
                             var responseUpload = await http.post(
-                                'http://' +
-                                    Globals.host +
-                                    ':8080/v1/image/upload',
+                                Globals.host + '/v1/image/upload',
                                 headers: {
                                   'Accept': 'application/json; charset=utf-8',
                                   'Content-Type':
@@ -58,9 +56,7 @@ class ProfileDrawer extends StatelessWidget {
                                 json.decode(responseUpload.body);
 
                             var response = await http.post(
-                                'http://' +
-                                    Globals.host +
-                                    ':8080/v1/user/update',
+                                Globals.host + '/v1/user/update',
                                 headers: {
                                   'Accept': 'application/json; charset=utf-8',
                                   'Content-Type':
@@ -84,7 +80,7 @@ class ProfileDrawer extends StatelessWidget {
                                               ServerErrorPopup()));
                             } else {
                               var responseInfo = await http.post(
-                                  'http://' + Globals.host + ':8080/v1/info',
+                                  Globals.host + '/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':
@@ -104,9 +100,7 @@ class ProfileDrawer extends StatelessWidget {
                               Globals.user_pic = responseInfoJson['picId'];
 
                               var responseImage = await http.post(
-                                  'http://' +
-                                      Globals.host +
-                                      ':8080/v1/image/get',
+                                  Globals.host + '/v1/image/get',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':

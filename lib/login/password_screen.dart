@@ -76,7 +76,7 @@ class PasswordScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://' + Globals.host + ':8080/v1/login/pass',
+                              Globals.host + '/v1/login/pass',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
                                 'Content-Type':
@@ -93,7 +93,7 @@ class PasswordScreenState extends State {
                             // If server returns an OK response, parse the JSON.
                             if (responseJson['success'] == true) {
                               var responseInfo = await http.post(
-                                  'http://' + Globals.host + ':8080/v1/info',
+                                  Globals.host + '/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':
@@ -113,7 +113,7 @@ class PasswordScreenState extends State {
                               Globals.user_pic = responseInfoJson['picId'];
 
                               var responseImage = await http.post(
-                                  'http://' + Globals.host + ':8080/v1/image/get',
+                                  Globals.host + '/v1/image/get',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':

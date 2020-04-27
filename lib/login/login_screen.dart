@@ -78,7 +78,7 @@ class LoginScreenState extends State {
                       child: RaisedButton(
                         onPressed: () async {
                           var response = await http.post(
-                              'http://' + Globals.host + ':8080/v1/login',
+                              Globals.host + '/v1/login',
                               headers: {
                                 'Accept': 'application/json; charset=utf-8',
                                 'Content-Type':
@@ -95,7 +95,7 @@ class LoginScreenState extends State {
                             if (responseJson['success'] == true &&
                                 responseJson['status'] == 1) {
                               var responseInfo = await http.post(
-                                  'http://' + Globals.host + ':8080/v1/info',
+                                  Globals.host + '/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':
@@ -116,7 +116,7 @@ class LoginScreenState extends State {
                             if (responseJson['success'] == true &&
                                 responseJson['status'] == 2) {
                               var responseInfo = await http.post(
-                                  'http://' + Globals.host + ':8080/v1/info',
+                                  Globals.host + '/v1/info',
                                   headers: {
                                     'Accept': 'application/json; charset=utf-8',
                                     'Content-Type':

@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:together_mobile/exceptions/exist_user.dart';
 import 'package:together_mobile/login/signup_popup.dart';
 import 'package:together_mobile/util/globals.dart';
@@ -24,6 +26,7 @@ class SignupScreenState extends State {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _facebookController = TextEditingController();
   final TextEditingController _instagramController = TextEditingController();
+  int picId = 0;
 
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -218,6 +221,43 @@ class SignupScreenState extends State {
                             return null;
                         }),
                     new SizedBox(height: SizeConfig.height(1.8)),
+                    new ButtonTheme(
+                      minWidth: SizeConfig.width(90.0),
+                      height: SizeConfig.height(7.0),
+                      child: RaisedButton(
+                        onPressed: () async {
+                          File file = await ImagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          if (file == null) return;
+                          String base64Image =
+                              base64Encode(file.readAsBytesSync());
+                          String fileName = file.path.split("/").last;
+
+                          var responseUpload = await http.post(
+                              Globals.host + '/v1/image/upload',
+                              headers: {
+                                'Accept': 'application/json; charset=utf-8',
+                                'Content-Type':
+                                    'application/json; charset=utf-8'
+                              },
+                              body: jsonEncode(
+                                  {'name': fileName, 'content': base64Image}));
+                          Map<String, dynamic> responseUploadJson =
+                              json.decode(responseUpload.body);
+
+                          picId = responseUploadJson["id"];
+                        },
+                        child: Text(
+                          'Выбрать фото',
+                          style: TextStyle(
+                            fontSize: SizeConfig.height(3),
+                          ),
+                        ),
+                        color: Color(0xFF231F20),
+                        textColor: Color(0xFF707070),
+                      ),
+                    ),
+                    new SizedBox(height: SizeConfig.height(1.8)),
                     new Row(children: [
                       Theme(
                         data: Theme.of(context).copyWith(
@@ -252,28 +292,31 @@ class SignupScreenState extends State {
                                   _phoneController.text.length > 0 &&
                                   _emailController.text.length > 0 &&
                                   _facebookController.text.length > 0 ||
-                              _instagramController.text.length > 0) {
+                              _instagramController.text.length > 0 &&
+                                  picId != 0) {
                             String firstName = _firstNameController.text;
                             String lastName = _lastNameController.text;
                             String phone = _phoneController.text;
                             String email = _emailController.text;
                             String facebook = _facebookController.text;
                             String instagram = _instagramController.text;
-                            var response = await http.post(
-                                'http://' + Globals.host + ':8080/v1/signup',
-                                headers: {
-                                  'Accept': 'application/json; charset=utf-8',
-                                  'Content-Type':
-                                      'application/json; charset=utf-8'
-                                },
-                                body: jsonEncode({
-                                  'firstName': firstName,
-                                  'lastName': lastName,
-                                  'phone': phone,
-                                  'email': email,
-                                  'facebook': facebook,
-                                  'instagram': instagram
-                                }));
+                            var response =
+                                await http.post(Globals.host + '/v1/signup',
+                                    headers: {
+                                      'Accept':
+                                          'application/json; charset=utf-8',
+                                      'Content-Type':
+                                          'application/json; charset=utf-8'
+                                    },
+                                    body: jsonEncode({
+                                      'firstName': firstName,
+                                      'lastName': lastName,
+                                      'phone': phone,
+                                      'email': email,
+                                      'facebook': facebook,
+                                      'instagram': instagram,
+                                      'picId': picId
+                                    }));
                             Map<String, dynamic> responseJson =
                                 json.decode(response.body);
                             if (responseJson['error'] ==
